@@ -1,0 +1,7 @@
+<clr-datagrid>
+  <clr-dg-column>Topic Name</clr-dg-column>
+  <clr-dg-row *ngFor="let topic of topics">
+    <clr-dg-cell>{{topic.topicName}}</clr-dg-cell>
+  </clr-dg-row>
+  <clr-dg-footer>{{topics.length}} topics</clr-dg-footer>
+</clr-datagrid>
