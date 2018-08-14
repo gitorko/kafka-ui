@@ -1,0 +1,4 @@
+.alert-icon.clr-vmw-logo,
+.clr-icon.clr-kafka-logo {
+  background-image: url("/assets/kafka-ui.png"); 
+}

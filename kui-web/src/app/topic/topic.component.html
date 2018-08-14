@@ -1,0 +1,226 @@
+<div class="clr-row">
+  <div class="clr-col-2 horizontal-scroll-wrapper">
+    <clr-tree-node>
+      <clr-icon shape="data-cluster"></clr-icon>
+      Topics
+      <ng-template [clrIfExpanded]="true">
+        <clr-tree-node *ngFor="let topic of topics">
+          <clr-icon shape="block"></clr-icon>
+          <a class="nav-link" [routerLink]="" (click)=selectedChanged(topic)>{{topic.name}}</a>
+        </clr-tree-node>
+      </ng-template>
+    </clr-tree-node>
+  </div>
+  <div class="clr-col-10">
+    <span style="float: right;">
+      <button type="button" class="btn btn-icon" (click)="dialogWindow = true">
+        <clr-icon shape="plus"></clr-icon> Create Topic
+      </button>
+    </span>
+    <clr-tabs *ngIf="topicConfig">
+      <clr-tab>
+        <button clrTabLink id="link1">Configuration</button>
+        <clr-tab-content id="content1" *clrIfActive>
+          <h3>Topic: {{selectedTopic.name}}</h3>
+          <clr-datagrid>
+            <clr-dg-column>Name</clr-dg-column>
+            <clr-dg-column>Value</clr-dg-column>
+            <clr-dg-column>Source</clr-dg-column>
+            <clr-dg-column>Sensitive</clr-dg-column>
+            <clr-dg-column>Readonly</clr-dg-column>
+            <clr-dg-row *ngFor="let config of topicConfig">
+              <clr-dg-cell>{{config.name}}</clr-dg-cell>
+              <clr-dg-cell>{{config.value}}</clr-dg-cell>
+              <clr-dg-cell>{{config.source}}</clr-dg-cell>
+              <clr-dg-cell>{{config.sensitive}}</clr-dg-cell>
+              <clr-dg-cell>{{config.readOnly}}</clr-dg-cell>
+            </clr-dg-row>
+          </clr-datagrid>
+        </clr-tab-content>
+      </clr-tab>
+      <clr-tab>
+        <button clrTabLink>Partition</button>
+        <clr-tab-content *clrIfActive="true">
+          <h3>Topic: {{selectedTopic.name}}</h3>
+          <clr-datagrid>
+            <clr-dg-column>Partition Id</clr-dg-column>
+            <clr-dg-column>Leader</clr-dg-column>
+            <clr-dg-column>Replicas</clr-dg-column>
+            <clr-dg-column>In Sync Replicas</clr-dg-column>
+            <clr-dg-row *ngFor="let partition of partitions">
+              <clr-dg-cell>{{partition.partition}}</clr-dg-cell>
+              <clr-dg-cell>{{partition.leader.host}}</clr-dg-cell>
+              <clr-dg-cell>{{partition.replicas?.length}}</clr-dg-cell>
+              <clr-dg-cell>{{partition.isr?.length}}</clr-dg-cell>
+            </clr-dg-row>
+            <clr-dg-footer>{{ partitions?.length }} partitions</clr-dg-footer>
+          </clr-datagrid>
+        </clr-tab-content>
+      </clr-tab>
+    </clr-tabs>
+  </div>
+</div>
+<br/>
+
+<clr-modal [(clrModalOpen)]="dialogWindow" [clrModalSize]="'xl'">
+  <h3 class="modal-title">Create Topic</h3>
+  <div class="modal-body">
+    <form clrForm clrLayout="horizontal">
+      <div class="clr-row">
+        <div class="clr-col">
+          <clr-input-container>
+            <label>Topic Name</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.topicName" name="topicName" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>Replication</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.replication" name="replication" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>Partition</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.partition" name="partition" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          &nbsp;
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <div class="clr-row">
+        <div class="clr-col">
+          <clr-input-container>
+            <label>retention.bytes</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>Replication</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.replication" name="replication" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>retention.ms</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.retention_ms" name="retention_ms" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>max.message.bytes</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.max_message_bytes" name="max_message_bytes" />
+          </clr-input-container>
+        </div>
+      </div>
+      <div class="clr-row">
+        <div class="clr-col">
+          <clr-input-container>
+            <label>segment.index.bytes</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_index_bytes" name="segment_index_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>segment.bytes</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>min.cleanable.dirty.ratio</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>min.insync.replicas</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+      </div>
+      <div class="clr-row">
+        <div class="clr-col">
+          <clr-input-container>
+            <label>delete.retention.ms</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>flush.messages</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>preallocate</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>flush.ms</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+      </div>
+      <div class="clr-row">
+        <div class="clr-col">
+          <clr-input-container>
+            <label>cleanup.policy</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>file.delete.delay.ms</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>segment.jitter.ms</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>index.interval.bytes</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+      </div>
+      <div class="clr-row">
+        <div class="clr-col">
+          <clr-input-container>
+            <label>compression.type</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>segment.ms</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+          <clr-input-container>
+            <label>unclean.leader.election.enable</label>
+            <input clrInput type="text" [(ngModel)]="createTopic.segment_bytes" name="segment_bytes" />
+          </clr-input-container>
+        </div>
+        <div class="clr-col">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="dialogWindow = false">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="saveTopic()">Submit</button>
+  </div>
+</clr-modal>

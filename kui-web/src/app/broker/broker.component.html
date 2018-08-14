@@ -1,0 +1,17 @@
+<div class="clr-row">
+  <div class="clr-col">
+  </div>
+</div>
+<clr-datagrid>
+  <clr-dg-column>Broker Id</clr-dg-column>
+  <clr-dg-column>Host</clr-dg-column>
+  <clr-dg-column>Port</clr-dg-column>
+  <clr-dg-column>Rack</clr-dg-column>
+  <clr-dg-row *ngFor="let broker of brokers">
+    <clr-dg-cell>{{broker.id}}</clr-dg-cell>
+    <clr-dg-cell>{{broker.host}}</clr-dg-cell>
+    <clr-dg-cell>{{broker.port}}</clr-dg-cell>
+    <clr-dg-cell>{{broker.rack}}</clr-dg-cell>
+  </clr-dg-row>
+  <clr-dg-footer>{{ brokers?.length }} brokers</clr-dg-footer>
+</clr-datagrid>

@@ -1,7 +1,34 @@
-<clr-datagrid>
-  <clr-dg-column>Topic Name</clr-dg-column>
-  <clr-dg-row *ngFor="let topic of topics">
-    <clr-dg-cell>{{topic.topicName}}</clr-dg-cell>
-  </clr-dg-row>
-  <clr-dg-footer>{{topics.length}} topics</clr-dg-footer>
-</clr-datagrid>
+<div class="clr-row">
+  <div class="clr-col-12">
+    <div class="card">
+      <div class="card-block">
+        <div class="clr-row">
+          <div class="clr-col-4">
+            <span class="card-title">
+              Brokers: {{brokers?.length}}
+            </span>
+          </div>
+          <div class="clr-col-4">
+            <span class="card-title">
+              Topics: {{topics?.length}}
+            </span>
+          </div>
+          <div class="clr-col-4">
+            <span class="card-title">
+              Version: 2.0.0
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<div class="clr-row">
+  <div class="clr-col-6">
+    <canvas id="chart1">{{ chart1 }}</canvas>
+  </div>
+  <div class="clr-col-6">
+      <canvas id="chart2">{{ chart2 }}</canvas>
+  </div>
+</div>

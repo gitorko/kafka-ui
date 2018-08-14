@@ -2,13 +2,20 @@
   <clr-header>
     <div class="branding">
       <a href="#" class="nav-link">
+        <span class="clr-icon clr-kafka-logo"></span>
         <span class="title">Kafka UI</span>
       </a>
     </div>
-      <div class="header-nav" [clr-nav-level]="1">
-          <a class="nav-link" href="#" [routerLink]="['/home']" routerLinkActive="active"><span class="nav-text">Home</span></a>
-      </div>
-    <div class="header-actions">
+    <div class="header-nav" [clr-nav-level]="1">
+      <a class="nav-link" href="#" [routerLink]="['/home']" routerLinkActive="active">
+        <span class="nav-text">Home</span>
+      </a>
+      <a class="nav-link" href="#" [routerLink]="['/topic']" routerLinkActive="active">
+        <span class="nav-text">Topic</span>
+      </a>
+      <a class="nav-link" href="#" [routerLink]="['/broker']" routerLinkActive="active">
+        <span class="nav-text">Broker</span>
+      </a>
     </div>
   </clr-header>
   <div class="content-container">
